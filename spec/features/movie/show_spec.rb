@@ -28,6 +28,10 @@ RSpec.describe 'The movie show page', type: :feature do
       expect("Ke Huy Quan").to appear_before "Michelle Yeoh"
     end
 
-    it 'displays the average age of all the movies actors'
+    it 'displays the average age of all the movies actors' do
+      visit "/movies/#{movie_1.id}"
+
+      expect(page).to have_content "Average Age of Actors: 47.67"
+    end
   end
 end
