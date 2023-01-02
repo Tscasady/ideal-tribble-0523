@@ -1,0 +1,9 @@
+<h1>Studio Info Page</h1>
+
+<p>Studio name: <%= @studio.name %></p>
+<p>Studio location: <%= @studio.location %></p>
+
+<h2>Studio Actors</h2>
+<% @studio.uniq_actors.each do |actor| %>
+  <%= actor.name %><br>
+<% end %>
