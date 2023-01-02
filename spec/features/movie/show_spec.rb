@@ -11,6 +11,7 @@ RSpec.describe 'The movie show page', type: :feature do
     let!(:actor_1) { movie_1.actors.create!(name: "Michelle Yeoh", age: 60) }
     let!(:actor_2) { movie_1.actors.create!(name: "Stephanie Hsu", age: 32) }
     let!(:actor_3) { movie_1.actors.create!(name: "Ke Huy Quan", age: 51) }
+    let!(:actor_4) { movie_4.actors.create!(name: "Auli'i Cravalho", age: 22) }
 
   describe 'when a user visits a movie show page' do
     it 'displays the movies title, creation year, and genre' do
@@ -26,12 +27,31 @@ RSpec.describe 'The movie show page', type: :feature do
 
       expect("Stephanie Hsu").to appear_before "Ke Huy Quan"
       expect("Ke Huy Quan").to appear_before "Michelle Yeoh"
+      expect(page).to_not have_content "Auli'i Cravalho"
     end
 
     it 'displays the average age of all the movies actors' do
       visit "/movies/#{movie_1.id}"
 
       expect(page).to have_content "Average Age of Actors: 47.67"
+    end
+
+    it 'has a form to add an actor to the movie' do
+      visit "/movies/#{movie_1.id}"
+
+      expect(page.has_field?(:actor_id)).to be true 
+    end
+
+    it 'can display an updated list of actors when the form is filled in with an actor id' do
+      visit "/movies/#{movie_4.id}"
+
+      expect(page).to_not have_content "Michelle Yeoh"
+
+      fill_in :actor_id, with: actor_1.id
+      click_button "Add Actor" 
+
+      expect(current_path).to eq "/movies/#{movie_4.id}"
+      expect(page).to have_content "Michelle Yeoh"
     end
   end
 end
