@@ -10,6 +10,7 @@ RSpec.describe Studio do
 
     let!(:studio_1) { Studio.create!(name: "Best Movie Studio", location: "Hollywood") }
     let!(:studio_2) { Studio.create!(name: "Film Productions", location: "Denver") }
+    let!(:studio_3) { Studio.create!(name: "Empty Studio", location: "Nowhere") }
     let!(:movie_1) { studio_1.movies.create!(title: "Everything Everywhere", creation_year: 2022, genre: "Drama") }
     let!(:movie_2) { studio_2.movies.create!(title: "Spiderman #189", creation_year: 2022, genre: "Tired") }
     let!(:movie_3) { studio_1.movies.create!(title: "Die Hard", creation_year: 1988, genre: "Action") }
@@ -26,6 +27,7 @@ RSpec.describe Studio do
     it 'returns a list of unique actors that work for the studio' do
       expect(studio_1.uniq_actors).to eq([actor_1, actor_2, actor_3, actor_5, actor_6])
       expect(studio_2.uniq_actors).to eq([actor_4])
+      expect(studio_3.uniq_actors).to eq([])
     end
   end
 end
