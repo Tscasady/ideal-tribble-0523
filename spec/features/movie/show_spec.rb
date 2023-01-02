@@ -39,16 +39,18 @@ RSpec.describe 'The movie show page', type: :feature do
     it 'has a form to add an actor to the movie' do
       visit "/movies/#{movie_1.id}"
 
-      expect(page).to have_form "Add Actor"
+      expect(page.has_field?(:actor_id)).to be true 
     end
 
     it 'can display an updated list of actors when the form is filled in with an actor id' do
       visit "/movies/#{movie_4.id}"
-      
-      fill_in :actor, with: actor_1.id
-      click_button :submit
 
-      expect(current_path).to be "/movies/#{movie_4.id}"
+      expect(page).to_not have_content "Michelle Yeoh"
+
+      fill_in :actor_id, with: actor_1.id
+      click_button "Add Actor" 
+
+      expect(current_path).to eq "/movies/#{movie_4.id}"
       expect(page).to have_content "Michelle Yeoh"
     end
   end
