@@ -9,6 +9,7 @@ RSpec.describe 'The studio index page', type: :feature do
     let!(:movie_2) { studio_2.movies.create!(title: "Spiderman #189", creation_year: 2022, genre: "Tired") }
     let!(:movie_3) { studio_1.movies.create!(title: "Die Hard", creation_year: 1988, genre: "Action") }
     let!(:movie_4) { studio_2.movies.create!(title: "Moana", creation_year: 2016, genre: "Animated") }
+
     it 'displays all the studios with their names and locations' do
       visit '/studios'
       within("#studio_#{studio_1.id}") do
