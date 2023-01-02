@@ -8,6 +8,7 @@ RSpec.describe 'The movie show page', type: :feature do
     let!(:movie_2) { studio_2.movies.create!(title: "Spiderman #189", creation_year: 2022, genre: "Tired") }
     let!(:movie_3) { studio_1.movies.create!(title: "Die Hard", creation_year: 1988, genre: "Action") }
     let!(:movie_4) { studio_2.movies.create!(title: "Moana", creation_year: 2016, genre: "Animated") }
+    let!(:movie_5) { studio_2.movies.create!(title: "Empty", creation_year: 2016, genre: "Empty") }
     let!(:actor_1) { movie_1.actors.create!(name: "Michelle Yeoh", age: 60) }
     let!(:actor_2) { movie_1.actors.create!(name: "Stephanie Hsu", age: 32) }
     let!(:actor_3) { movie_1.actors.create!(name: "Ke Huy Quan", age: 51) }
@@ -52,6 +53,13 @@ RSpec.describe 'The movie show page', type: :feature do
 
       expect(current_path).to eq "/movies/#{movie_4.id}"
       expect(page).to have_content "Michelle Yeoh"
+    end
+
+    it 'can display a movie with no actors' do
+      visit "/movies/#{movie_5.id}"
+
+      expect(page).to_not have_content "Michelle Yeoh"
+      expect(page).to have_content "Average Age of Actors: 0"
     end
   end
 end

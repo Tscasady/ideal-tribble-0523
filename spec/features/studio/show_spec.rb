@@ -4,6 +4,7 @@ RSpec.describe 'The studio show page', type: :feature do
 
   let!(:studio_1) { Studio.create!(name: "Best Movie Studio", location: "Hollywood") }
   let!(:studio_2) { Studio.create!(name: "Film Productions", location: "Denver") }
+  let!(:studio_3) { Studio.create!(name: "Empty Studio", location: "Nowhere") }
   let!(:movie_1) { studio_1.movies.create!(title: "Everything Everywhere", creation_year: 2022, genre: "Drama") }
   let!(:movie_2) { studio_2.movies.create!(title: "Spiderman #189", creation_year: 2022, genre: "Tired") }
   let!(:movie_3) { studio_1.movies.create!(title: "Die Hard", creation_year: 1988, genre: "Action") }
@@ -35,5 +36,13 @@ RSpec.describe 'The studio show page', type: :feature do
       expect(page).to have_content "Ke Huy Quan" 
       expect(page).to_not have_content "Auli'i Cravalho" 
     end
+
+    it 'can display no actors' do
+      visit "/studios/#{studio_3.id}"
+
+      expect(page).to_not have_content "Bruce Willis"
+      expect(page).to_not have_content "Michelle Yeoh" 
+    end
+
   end
 end
